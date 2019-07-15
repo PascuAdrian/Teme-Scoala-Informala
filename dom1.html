@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dom1</title>
+    <style>
+        input[name='nume'].invalid,
+
+        input[name='prenume'].invalid,
+
+        select.invalid {
+
+            border-color: red;
+
+            background-color: #ffd1d1;
+
+        }
+
+        input[name='nume'].valid,
+
+        input[name='prenume'].valid,
+
+        select.valid {
+
+            border-color: greenyellow;
+
+            background-color: greenyellow;
+
+        }
+
+        input[name='num'].valide,
+
+        input[name='prenum'].valide,
+
+        .valide {
+
+            border-color: greenyellow;
+
+            background-color: greenyellow;
+
+        }
+        .ex{
+            position: relative;
+        }
+        .rezultat{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+        .alert{
+            background-color:red;
+        }
+    </style>
+    <script>
+        function validate(formular, event) {
+
+            event.preventDefault();
+            var numeInput = formular.querySelector("[name='nume']");
+            var nume = numeInput.value;
+
+            if (nume.length >= 1) {
+
+                numeInput.classList.remove("invalid");
+
+            } else {
+
+                numeInput.classList.add("invalid");
+
+            }
+            var prenumeInput = formular.querySelector("[name='prenume']");
+            var prenume = prenumeInput.value;
+
+            if (prenume.length >= 1) {
+
+                prenumeInput.classList.remove("invalid");
+
+            } else {
+
+                prenumeInput.classList.add("invalid");
+            }
+            if (nume === prenume) {
+                numeInput.classList.add("valid");
+                prenumeInput.classList.add("valid");
+            } else {
+                numeInput.classList.remove("valid");
+                prenumeInput.classList.remove("valid");
+            }
+           
+        }
+        function validate2(bau,event){
+
+            event.preventDefault();
+
+            var num1Input = bau.querySelector("[name='num1']");
+            var prenum1Input = bau.querySelector("[name='prenum1']");
+            var num1 = num1Input.value;
+            var prenum1 = prenum1Input.value;
+            if (num1 > prenum1) {
+                num1Input.classList.add("valide");
+                prenum1Input.classList.remove("valide");
+            }
+            else if (num1 < prenum1) {
+                num1Input.classList.remove("valide");
+                prenum1Input.classList.add("valide");
+                
+            }
+            else if (num1 === prenum1) {
+                num1Input.classList.add("valide");
+                prenum1Input.classList.add("valide");
+            }
+        }
+
+        function validate3(buz,event){
+            event.preventDefault();
+            var c1Input = buz.querySelector("[name='c1']");
+            var c2Input = buz.querySelector("[name='c2']");
+            var c3Input = buz.querySelector("[name='c3']");
+            if(parseInt(c1Input.value)>parseInt(c2Input.value)){
+                c3Input.value=c1Input.value;
+            }else if(parseInt(c1Input.value)<parseInt(c2Input.value)){
+                c3Input.value=c2Input.value;
+            }else {
+                c3Input.value="Valorile sunt egale";
+            }
+        }
+        function validate4(zap,event){
+            event.preventDefault();
+            var b1Input = zap.querySelector("[name='b1']");
+            var b2Input = zap.querySelector("[name='b2']");
+            var b3Input = zap.querySelector("[name='b3']");
+            b3Input.value= parseInt(b1Input.value)+parseInt(b2Input.value);
+            
+
+        }
+        function validate5(formular,event){
+            event.preventDefault();
+            var rezInput= formular.querySelector("[name='rez']");
+            var a1Input= formular.querySelector("[name='a1']");
+            rezInput.value=a1Input.value.length;
+        }
+        function validate6(formular,event){
+            event.preventDefault();
+            var rezInput= formular.querySelector("[name='rez']");
+            var a1Input= formular.querySelector("[name='a1']");
+            rezInput.value=a1Input.value.length;
+            if(a1Input.value.length>=10){
+                rezInput.classList.add('alert');
+            }else{
+                rezInput.classList.remove('alert')
+            }
+        }
+        function validate7(event){
+            if(event.keyCode<=47 || event.keyCode>=58){
+                event.preventDefault();
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <form onsubmit="validate(this,event)">
+        <fieldset>
+
+            <legend>Formular</legend>
+
+            <label>Camp1: <input type="text" name="prenume" /></label> <br />
+            <label>Camp2: <input type="text" name="prenume" /></label> <br />
+            <label>Camp3: <input type="text" name="prenume" /></label> <br />
+            <br />
+            <label>Selector:
+
+                <select name="select">
+
+                    <option value="">[ Alege ]</option>
+
+                    <option value="rosu">Optiunea1</option>
+                    <option value="rosu">Optiunea2</option>
+
+                </select>
+                <br />
+            </label> <br />
+            <label>Bifa1: <input type="checkbox" name="toc" /></label> <br />
+            <label>Bifa2: <input type="checkbox" name="toc" /></label> <br />
+            <label>Bifa3: <input type="checkbox" name="toc" /></label> <br />
+            <br />
+            <label>Radio <br />
+
+                <input type="radio" name="sex" value="A" />A <br />
+                <input type="radio" name="sex" value="B" />B <br />
+                <input type="radio" name="sex" value="C" />C <br />
+
+            </label> <br />
+            <input type="submit" value="Salveaza" />
+
+        </fieldset>
+    </form>
+
+    <br />
+    <form onsubmit="validate(this,event)">
+        <fieldset>
+
+            <legend>Exercitiul 1</legend>
+
+            <label>Camp1: <input type="" name="nume" /></label> <br />
+            <br />
+            <label>Camp2: <input type="" name="prenume" /></label> <br />
+
+            </label> <br />
+            <input type="submit" value="Salveaza" />
+
+        </fieldset>
+    </form>
+    <br />
+    <form onsubmit="validate2(this,event)">
+        <fieldset>
+
+            <legend>Exercitiul 2</legend>
+
+            <label>Camp1: <input type="" name="num1" /></label> <br />
+            <br />
+            <label>Camp2: <input type="" name="prenum1" /></label> <br />
+
+            </label> <br />
+            <input type="submit" value="Salveaza" />
+
+        </fieldset>
+    </form>
+
+    <br />
+    <form onsubmit="validate3(this,event)">
+        <fieldset>
+
+            <legend>Exercitiul 3</legend>
+
+            <label>Camp1: <input type="" name="c1" /></label> <br />
+            <br />
+            <label>Camp2: <input type="" name="c2" /></label> <br />
+            <br />
+            <label>Camp3: <input type="" name="c3" /></label> <br />
+
+            </label> <br />
+            <input type="submit" value="Salveaza" />
+
+        </fieldset>
+    </form>
+    <br />
+    <form onsubmit="validate4(this,event)">
+        <fieldset>
+
+            <legend>Exercitiul 4</legend>
+
+            <label>Camp1: <input type="" name="b1" /></label> <br />
+            <br />
+            <label>Camp2: <input type="" name="b2" /></label> <br />
+            <br />
+            <label>Camp3: <input type="" name="b3" /></label> <br />
+
+            </label> <br />
+            <input type="submit" value="Salveaza" />
+
+        </fieldset>
+    </form>
+    <br />
+    <form onsubmit="validate5(this,event)">
+        <fieldset class="ex">
+
+            <legend>Exercitiul 5</legend>
+
+            <label>Camp1: <input type="" name="a1" /></label> <br />
+            <br />
+        </label> <br />
+        <input type="submit" value="Salveaza" />
+            <span class="rezultat">
+                <input type="" name="rez" >
+            </span>
+
+        </fieldset>
+    </form>
+    <br />
+    <form onsubmit="validate6(this,event)">
+        <fieldset class="ex">
+
+            <legend>Exercitiul 6</legend>
+
+            <label>Camp1: <input type="" name="a1" maxlength="10" /></label> <br />
+            <br />
+        </label> <br />
+        <input type="submit" value="Salveaza" />
+            <span class="rezultat">
+                <input type="" name="rez" >
+            </span>
+
+        </fieldset>
+    </form>
+    <br />
+    <form >
+        <fieldset class="ex">
+
+            <legend>Exercitiul 7</legend>
+
+            <label>Camp1: <input type="text" name="a1"  onkeypress="validate7(event)"/></label> <br />
+            <br />
+        
+
+        </fieldset>
+    </form>
+</body>
+
+</html>
