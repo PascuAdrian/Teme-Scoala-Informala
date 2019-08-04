@@ -71,8 +71,8 @@
             window.idxEditare=idx;
             var obj=idx;
             var form = document.querySelector("#add-form");
-            form.querySelector("[name='nume']").nodeValue=obj.nume;
-            form.querySelector("[name='telefon']").nodeValue=obj.telefon;
+            form.querySelector("[name='nume']").value=lista[idx].nume;
+            form.querySelector("[name='telefon']").nodeValue=lista[idx].telefon;
         }
         function sterge(idx){
             if(confirm(`Esti sigur ca vrei sa stergi inregistrarea ${lista[idx].nume}?`)){
