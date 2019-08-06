@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shopping list</title>
+    <style>
+        body {
+            background-color: #D0BCFE;
+        }
+
+        .all {
+            background-color: white;
+            border-radius: 8px;
+
+        }
+
+        .form {
+            margin-left: 32%;
+            padding: 10px;
+        }
+
+        .addit {
+            border-radius: 6px;
+            background-color: #71FD95;
+            height: 33px;
+        }
+
+        .asc {
+            border-radius: 6px;
+            background-color: #E19BFC;
+        }
+
+        #tabel {
+            margin-left: 32%;
+        }
+
+        .mark {
+            background-color: #FF9797;
+            border-radius: 6px;
+        }
+
+        .taie {
+            text-decoration: line-through;
+        }
+    </style>
+    <script>
+        var list = [];
+        var idxEdit = -1;
+
+        function sortDesc() {
+            list.sort(function (a, b) {
+                if (a.inpProduse < b.inpProduse) {
+                    return 1;
+                }
+                if (a.inpProduse > b.inpProduse) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+            draw();
+        }
+
+        function sortAsc() {
+            list.sort(function (a, b) {
+                if (a.inpProduse > b.inpProduse) {
+                    return 1;
+                }
+                if (a.inpProduse < b.inpProduse) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+            draw();
+        }
+
+        function draw() {
+            
+            var str = "";
+            for (var i = 0; i < list.length; i++) {
+                str += `
+                    <tr id='list' >
+                
+                        <td class="${(list[i].marked === true)?"taie":""}">${list[i].inpProduse}</td>
+      
+          
+                        <td>
+                            <input class="mark" type="button" value="Mark as buyed" onclick="mark(${i});"   />
+                        </td>
+               
+                    </tr>`;
+            }
+            document.querySelector("#tabel tbody").innerHTML = str;
+        }
+        function mark(idx) {
+            list[idx].marked=true;
+            draw();
+        }
+       /** function mark(idx) {
+            window.idxEdit = idx;
+
+            var result = strike();
+            document.getElementById("list[idx]").innerHTML=result;
+            }
+
+
+               var list = document.querySelector('ul');
+        list.addEventListener('click', function (ev) {
+            if (ev.target.tagName === 'LI') {
+                ev.target.classList.toggle('checked');
+            }
+        }, false);     
+            
+            */
+        /**function mark(idx){
+            window.idxEdit=idx;
+        var list=document.querySelector("tr");
+        list.addEventListener('click',function(ev){
+            if(ev.target.tagName==='td'){
+                ev.target.classList.toggle("taie");
+            }
+        },false);
+    }*/
+        
+        function adauga(form, event) {
+            event.preventDefault();
+            var obj = {};
+            obj.inpProduse = form.querySelector("[name='inpProduse']").value;
+            if (idxEdit === -1) {
+                list.push(obj);
+            } else {
+                list[idxEdit] = obj;
+                idxEdit = -1;
+            }
+            draw();
+            document.querySelector("#add-form").reset();
+        }
+    </script>
+</head>
+
+<body onload="draw()">
+    <div class="all">
+        <div class="form">
+
+            <h4>SHOPPING LIST</h4>
+            <form id="add-form" onsubmit="adauga(this,event);">
+
+                <span>
+                    <input type="text" name="inpProduse" style="height: 23px;">
+                </span>
+                <span>
+                    <input type="submit" value="Add item" class="addit">
+                </span>
+
+            </form>
+            </br></br>
+            <input type="button" value="Sort asc" name="asc" class="asc" onclick="sortAsc()">
+            <input type="button" value="Sort desc" name="desc" class="asc" onclick="sortDesc()">
+        </div>
+        </br>
+        <div id="tabel">
+            <table>
+                <thead>
+                    <th>Item description &nbsp;&nbsp;</th>
+                    <th>Action</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
