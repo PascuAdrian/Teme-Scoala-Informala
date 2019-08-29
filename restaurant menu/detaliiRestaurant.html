@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .culoareSpate {
+            background-color: #BAF3EC;
+            padding: 5px 25px;
+        }
+
+        .contact {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-color: #6796F8;
+            color: white;
+            height: 30px;
+            width: 80px;
+            border-radius: 5px;
+        }
+
+        .meniu {
+            position: absolute;
+            top: 30px;
+            right: 110px;
+            background-color: #E34261;
+            color: white;
+            height: 30px;
+            width: 80px;
+            border-radius: 5px;
+        }
+        #imagine{
+            width:450px ;
+            height: 450px;
+        }
+    </style>
+    <script>
+        async function drawDetail() {
+            var i=window.location.search.substring(4);
+                var response = await fetch(`https://meniu-restaurant-94bee.firebaseio.com/${i}.json`);
+                preparat = await response.json();
+                    document.querySelector("#imagine").src=preparat.imagine;
+                    document.querySelector("#ingrediente").innerHTML = preparat.ingrediente;
+                    document.querySelector("#nume").innerHTML = preparat.nume;
+                    document.querySelector("#reteta").innerHTML = preparat.reteta;
+                   
+                    }
+    </script>
+</head>
+
+<body onload="drawDetail()">
+    <div class="culoareSpate">
+
+        <div class="base">
+            <h1>Cald si bun</h1>
+            <form action="contactRestaurant.html">
+                <input type="submit" value="Contact" class="contact">
+            </form>
+            <span>
+                <form action="Restaurant menu.html">
+                    <input type="submit" value="Meniu" class="meniu" />
+                </form>
+            </span>
+
+        </div>
+
+
+
+        </br>
+        <div>
+            <img src="" id="imagine"/>
+        </br></br>
+            <span id="nume" style="font-weight: bolder;font-size: 22px"></span>
+        </br></br>
+            <span id="ingrediente" ></span>
+            
+            <span id="reteta"></span>
+        </div>
+        
+
+
+</body>
+
+</html>
