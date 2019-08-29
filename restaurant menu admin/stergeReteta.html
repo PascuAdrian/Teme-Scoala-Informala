@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Sterge</title>
+    <style>
+        .culoareSpate {
+            background-color: #BAF3EC;
+            padding: 5px 25px;
+            width: 60%;
+
+            margin: 0px auto;
+        }
+
+        .nuBut {
+            background-color: #6796F8;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            height: 25px;
+
+        }
+
+        .daBut {
+            background-color: #E34261;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            height: 25px;
+        }
+    </style>
+    <script>
+        var iEdit;
+        var list = [];
+    
+       async function deseneaza(){
+            var i= window.location.search.substring(4);
+            var response = await fetch(`https://meniu-restaurant-94bee.firebaseio.com/.json`);
+            list = await response.json();
+            document.querySelector("[name='nume']").innerHTML=list[i].nume;
+        }
+        async function del(){
+            event.preventDefault();
+            var i= window.location.search.substring(4);
+            var response = await fetch(`https://meniu-restaurant-94bee.firebaseio.com/${i}.json`,{
+						method:"delete"
+					});
+                    location.href = "Restaurant menu admin.html";
+        }
+
+    </script>
+</head>
+
+<body onload="deseneaza()">
+    <div class="culoareSpate">
+
+        <h1>Cald si bun (Admin)</h1>
+
+        <h3>Esti pe cale sa stergi preparatul: "<span id="indPreparat" name="nume"></span>" </h3>
+
+        </br>
+
+
+        <h3>Confirmi stergerea?</h3>
+
+        </br>
+        <input type="button" value="DA" class="daBut" id="daBut" onclick="del()">
+        <a href="Restaurant menu admin.html"><input type="button" value="NU" class="nuBut"></a>
+
+
+</body>
+
+</html>

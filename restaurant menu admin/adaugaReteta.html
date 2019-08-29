@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title>Adauga reteta</title>
+
+    <style>
+        .culoareSpate {
+            background-color: #BAF3EC;
+            padding: 5px 25px;
+            width: 60%;
+
+            margin: 0px auto;
+        }
+
+        .adaugaPreparat {
+            border-radius: 3px;
+            background-color: #6796F8;
+            color: white;
+            height: 30px;
+        }
+
+        .container{
+            margin-left: 30%;
+
+        }
+
+        .lds-hourglass {
+			  display: inline-block;
+			  position: fixed;
+			  width: 100%;
+			  height: 100%;
+			  background-color: rgba(120,120,120,0.4);
+			}
+			.lds-hourglass:after {
+			  content: " ";
+			  display: block;
+			  
+			  border-radius: 50%;
+			  width: 0;
+			  height: 0;
+			  margin: 6px auto;
+			  box-sizing: border-box;
+			  border: 44px solid #fff;
+			  border-color: #db5454 transparent #db5454 transparent;
+			  animation: lds-hourglass 1.2s infinite;
+			}
+			@keyframes lds-hourglass {
+			  0% {
+				transform: rotate(0);
+				animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+			  }
+			  50% {
+				transform: rotate(900deg);
+				animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+			  }
+			  100% {
+				transform: rotate(1800deg);
+			  }
+			}
+            .hidden{
+				display:none !important;
+			}
+    </style>
+    <script>
+        			function showLoading(){
+				document.querySelector("#loading").classList.remove("hidden");
+			}
+        async function addR(event) {
+            
+            event.preventDefault();
+            
+            var obj = {
+                imagine: document.querySelector("[name='imagine']").value,
+                ingrediente: document.querySelector("[name='ingrediente']").value,
+                nume: document.querySelector("[name='nume']").value,
+                reteta: document.querySelector("[name='preparare']").value
+
+            }
+
+            var response = await fetch(`https://meniu-restaurant-94bee.firebaseio.com/.json`, {
+                method: "post",
+                body: JSON.stringify(obj)
+                
+            });
+            showLoading()
+            location.href = "Restaurant menu admin.html";
+          
+        }
+
+    </script>
+</head>
+
+<body>
+    	<div id="loading" class="lds-hourglass hidden"></div>
+    <div class="culoareSpate">
+        <div class="titlu">
+            <h1>Cald si bun (Admin)</h1>
+        </div>
+        <form  onsubmit="addR(event)" class="container">
+            <div>
+                <div class="inputuri"><label for="">Nume: </label></br><input type="text" name="nume" id=""></div>
+                <div class="inputuri"> <label for="">URL Imagine: </label></br><input type="text" name="imagine" id=""></div>
+                <div class="inputuri"> <label for="">Ingrediente: </label></br><textarea name="ingrediente" id=""></textarea></div>
+                <div class="inputuri"> <label for="">Mod de preparare: </label></br><textarea name="preparare" id=""></textarea></div>
+               
+                    <input type="submit"  name=""  class="adaugaPreparat" value="Adauga preparat" >
+
+
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

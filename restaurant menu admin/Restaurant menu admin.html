@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Meniu</title>
+    <style>
+        .culoareSpate {
+            background-color: #BAF3EC;
+            padding: 5px 25px;
+        }
+
+        .addReteta {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-color: #6796F8;
+            color: white;
+            height: 30px;
+
+            border-radius: 5px;
+        }
+
+
+
+        .sterge {
+            background-color: #E34261;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            width: 80px;
+            height: 30px;
+
+        }
+        .modifica{
+                background-color: #6796F8;
+                color: white;
+            border: none;
+            border-radius: 2px;
+            width: 80px;
+            height: 30px;
+        }
+
+        .image {
+            max-height: 100%
+        }
+
+        .paragraf {
+            max-height: 100%;
+        }
+
+        .buton {
+            max-height: 100%;
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+        }
+
+        #container {
+            display: grid;
+            grid-template-columns: 1fr 3fr 5fr;
+            grid-gap: 30px;
+
+        }
+    </style>
+    <script>
+        var lista = [{
+                img: 'men1.jpg',
+                paragraf: 'pastrama berbecut',
+                ingrediente: ' 2 kg carne de miel sau de oaie, 4 capatani de usturoi,2 lingurite de sare,2 lingurite de piper,1 lingurita de boia,o lingurita de cimbru,1 / 2 pahar de vin alb ',
+            },
+            {
+                img: 'men2.png',
+                paragraf: 'chiftelute marinate',
+                ingrediente: 'carne,sare,apa,gust',
+            },
+            {
+                img: 'men3.png',
+                paragraf: 'fasole batuta',
+                ingrediente: '300g fasole uscata sau 3 conserve fasole alba fiarta,sare,piper,2-3 catei de usturoi zdrobiti,2-3 cepe mari, 2 linguri de ulei,2 lingurite bune de paprika(boia dulce)',
+            },
+        ]
+
+
+        async function draw() {
+            var response = await fetch("https://meniu-restaurant-94bee.firebaseio.com/.json");
+            lista = await response.json();
+            var str = "";
+
+            for (var i in lista) {
+
+
+                str += `<tr id="container">
+                        <td><img src="${lista[i].imagine}" alt=""></td>
+                    
+                        <td><div>
+                                <p style="font-weight: bolder;font-size: 22px">${lista[i].nume}</p>
+                            </div>
+                            
+                            <div>${lista[i].ingrediente}</div>
+                        </td>
+                        
+                        <div>
+                        <td><a href="modificaReteta.html?id=${i}" ><input type="button" value="Modifica" class="modifica"></a>
+                        <a href="stergeReteta.html?id=${i}" ><input type="button" value="Sterge" class="sterge"></a></td>
+                    </div>
+                    </tr>`;
+
+            }
+            document.querySelector("#add-table").innerHTML = str;
+        }
+    </script>
+</head>
+
+<body onload="draw()">
+    <div class="culoareSpate">
+
+        <div>
+            <h1>Cald si bun (Admin)</h1>
+            <form action="adaugaReteta.html">
+                <input type="submit" value="Adauga reteta noua" class="addReteta" />
+            </form>
+        </div>
+
+
+
+        </br>
+        <div>
+            <table id="add-table">
+            </table>
+        </div>
+
+
+
+</body>
+</div>
+
+</html>
