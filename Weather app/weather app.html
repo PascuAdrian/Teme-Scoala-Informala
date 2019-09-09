@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="weather.js"></script>
+    <title>Weather</title>
+    <style>
+        body {
+            background-color: #E3F2FC;
+        }
+
+        .containerUNU {
+            background-color: white;
+            border-radius: 5px;
+            padding-left: 20px;
+
+
+        }
+
+        .textBox {
+            height: 21px;
+        }
+
+        .buttons {
+            background-color: #1E88E5;
+            color: white;
+            border-radius: 6px;
+            height: 30px;
+            border: none;
+
+
+        }
+
+        .containerDOI {
+            background-color: white;
+            border-radius: 5px;
+            padding-left: 20px;
+            display: grid;
+            grid-auto-flow: column;
+
+        }
+
+        .containerTrei {
+            background-color: white;
+            border-radius: 5px;
+            padding-left: 20px;
+            
+        }
+
+        .harta {
+            width: 800px;
+            height: 300px;
+        }
+
+        .days {
+            display: grid;
+            grid: 1fr 1fr 1fr 1fr 1fr 1fr;
+        }
+        .forecast-weather{
+            display: grid;
+            grid-template-columns: repeat(6,1fr);
+
+            
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="containerUNU">
+
+        <span><input type="text" class="oras" name="" id="" class="textBox"></span>
+        <span><input type="button" value="Afiseaza vremea" name="" id="weather-now" class="buttons"
+                onclick="weatherNow()"></span>
+        <span><input type="button" value="Afiseaza prognoza" name="" id="weather-forecast" class="buttons"
+                onclick="weatherForecast()"></span>
+
+    </div>
+    </br>
+    <div class="containerDOI">
+        <div>
+            <h3 style="margin-left: 10px;">Vremea acum</h3>
+            <hr style="width: 98%">
+            <img src="" alt="" class="imagine">
+            <p>Descriere: <span class="descriere"></span></p><span></span>
+            <p>Umiditate: <span class="umiditate"></span></p>
+            <p>Presiune: <span class="presiune"></span></p>
+            <p>Temperatura curenta: <span class="tempCurenta"></span></p>
+            <p>Minima zilei: <span class="minZilei"></span></p>
+            <p>Maxima zilei: <span class="maxZilei"></span></p>
+        </div>
+
+        <div>
+
+            </br></br></br></br>
+
+            <iframe src="" frameborder="0" class="harta"></iframe>
+        </div>
+    </div>
+    </br>
+    <div class="containerTrei">
+        <h3 style="margin-left: 10px;">Vremea in urmatoarele zile pentru: <span class="forecastCity"></span> &nbsp;<span
+                class="forecastCountry"> </span> </h3>
+        <hr style="width: 98%">
+        <div class="forecast-weather">
+            <div class="day"></div>
+            <div class="day"></div>
+            <div class="day"></div>
+            <div class="day"></div>
+            <div class="day"></div>
+            <div class="day"></div>
+        </div>
+        </br>
+    </div>
+
+</body>
+
+</html>
