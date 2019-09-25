@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .first-container {
+            display: grid;
+            grid-template-columns: 6fr 1.5fr 1fr;
+            gap: 20px;
+            height: 50px;
+        }
+
+        .titlu {
+            font-size: 25px;
+        }
+
+        .pad {
+            padding: 10px;
+            cursor: pointer;
+
+        }
+
+        body {
+            padding-top: 40px;
+            padding-bottom: 80px;
+            font-family: Verdana, sans-serif;
+
+        }
+
+        .but {
+            font-size: 25px;
+            height: 80%;
+
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+
+
+        }
+
+        .remove {
+            color: blue;
+            text-align: end;
+        }
+
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            flex-basis: 100%;
+            flex: 1;
+            align-content: space-between;
+
+        }
+
+        .titluTabel {
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+
+        .img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .titluFormular {
+            display: flex;
+            justify-content: space-around
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        \ 
+        /* -- quantity box -- */
+
+        .quantity {
+            display: inline-block;
+        }
+
+        .quantity .input-text.qty {
+            width: 35px;
+            height: 39px;
+            padding: 0 5px;
+            text-align: center;
+            background-color: transparent;
+            border: 1px solid #efefef;
+        }
+
+        .quantity.buttons_added {
+            text-align: left;
+            position: relative;
+            white-space: nowrap;
+            vertical-align: top;
+        }
+
+        .quantity.buttons_added input {
+            display: inline-block;
+            margin: 0;
+            vertical-align: top;
+            box-shadow: none;
+        }
+
+        .quantity.buttons_added .minus,
+        .quantity.buttons_added .plus {
+            padding: 7px 10px 8px;
+            height: 41px;
+            background-color: #ffffff;
+            border: 1px solid #efefef;
+            cursor: pointer;
+        }
+
+        .quantity.buttons_added .minus {
+            border-right: 0;
+        }
+
+        .quantity.buttons_added .plus {
+            border-left: 0;
+        }
+
+        .quantity.buttons_added .minus:hover,
+        .quantity.buttons_added .plus:hover {
+            background: #eeeeee;
+        }
+
+        .quantity input::-webkit-outer-spin-button,
+        .quantity input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            margin: 0;
+        }
+
+        .quantity.buttons_added .minus:focus,
+        .quantity.buttons_added .plus:focus {
+            outline: none;
+        }
+    </style>
+    <script>
+        function home() {
+            location.href = "E-commerce.html";
+        }
+
+        function cosCumparaturi() {
+            location.href = "cosCumparaturi.html";
+        }
+
+        async function draw() {
+            var str = "";
+            var response = await fetch(`https://motocycle-5cae5.firebaseio.com/produse.json`);
+            window.list = await response.json();
+
+            for (var i in list) {
+
+                str += `
+
+            <div class="row">
+                <div class="column"><img class="img" src="${list[i].Imagine}" alt="" >
+                </div>
+                <div class="column">${list[i].Nume}
+                </div>
+                <div class="column">${list[i].Price}
+                </div>
+                <div class="column"><div class="quantity">
+                        <div class="quantity buttons_added">
+                            <input type="button" value="-" class="minus" onclick="increaseQ('${i}',-1)">
+                            <input type="number" step="1" min="1" name="quantity" value="${list[i].Quantity}" title="Qty" class="input-text qty text" size="4">
+                            <input type="button" value="+" class="plus" onclick="increaseQ('${i}',1)">
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <p class="pad remove" onclick="remove(event,'${i}')">Remove</p>
+                </div>
+
+            </div>
+          `;
+            }
+            document.querySelector("#obiecteCos").innerHTML = str;
+        }
+
+        async function increaseQ(i, nr) {
+            list[i].Quantity = list[i].Quantity + nr;
+            var response = await fetch(`https://motocycle-5cae5.firebaseio.com/produse/${i}/Quantity.json`, {
+                method: "put",
+                body: list[i].Quantity
+            });
+
+            await draw();
+        }
+        async function remove(event, i) {
+            event.preventDefault();
+
+            var response = await fetch(`https://motocycle-5cae5.firebaseio.com/produse/${i}.json`, {
+                method: "delete",
+
+            });
+            location.href = "adminEcommerce.html";
+        }
+
+        async function addP(event) {
+            event.preventDefault();
+            var obj = {
+                Category: document.querySelector("[name='category']").value,
+                Imagine: document.querySelector("[name='imagine']").value,
+                Nume: document.querySelector("[name='nume']").value,
+                MaxPowerEC: document.querySelector("[name='maxPowerEC']").value,
+                MaxTorqueEC: document.querySelector("[name='maxTorqueEC']").value,
+                FrontSuspension: document.querySelector("[name='frontSuspension']").value,
+                RearSuspension: document.querySelector("[name='rearSuspension']").value,
+                Frame: document.querySelector("[name='frame']").value,
+                Price: document.querySelector("[name='price']").value,
+                Quantity: document.querySelector("[name='Quantity']").value,
+            }
+            var response = await fetch(`https://motocycle-5cae5.firebaseio.com/produse.json`, {
+                method: "post",
+                body: JSON.stringify(obj)
+
+            });
+
+            location.href = "adminEcommerce.html";
+
+        }
+
+        function cancel() {
+            location.href = "adminEcommerce.html";
+        }
+
+        function adaugaP() {
+            document.querySelector("#theFirst").classList.add("hidden");
+            document.querySelector("#theSecond").classList.remove("hidden");
+        }
+    </script>
+</head>
+
+<body onload="draw()">
+    <div id="theFirst">
+        <div class="first-container">
+            <p class="titlu pad" onclick="home()">Titlu</p>
+            <button class="but buttonCump" onclick="cosCumparaturi()">Cos de cumparaturi</button>
+        </div>
+        </br></br></br></br></br></br>
+        <div class="second-container">
+            <div class="titluTabel">
+                <div>Gestionare produse &nbsp </div>
+                <button class="but flexbut" onclick="adaugaP()">Adauga produs</button>
+            </div>
+            </br></br></br>
+            <div class="row">
+                <div class="column">Imagine
+                </div>
+                <div class="column">Nume
+                </div>
+                <div class="column">Pret
+                </div>
+                <div class="column">Cantitate
+                </div>
+                <div class="column">
+                </div>
+            </div>
+            </br>
+            </br>
+            <div id="obiecteCos"></div>
+
+
+        </div>
+    </div>
+    <div class="hidden" id="theSecond">
+        <div class="titluFormular">
+            <div>Adaugare produs</div>
+            <button onclick="addP(event)">Save</button>
+            <button onclick="cancel()">Cancel</button>
+        </div>
+        </br></br>
+        <form>
+            <div class="inputuri"><label for="">Category: </label></br><select name="category" id="">
+                    <option value="naked">naked</option>
+                    <option value="cruiser">cruiser</option>
+                    <option value="sport">sport</option>
+                    <option value="touring">touring</option>
+                    <option value="sportTouring">sportTouring</option>
+                    <option value="dual">dual</option>
+                    <option value="scooter">scooter</option>
+                    <option value="offroad">offroad</option>
+                    <option value="electric">electric</option>
+
+                </select></div>
+            <div class="inputuri"><label for="">Imagine: </label></br><input type="text" name="imagine"></div>
+            <div class="inputuri"><label for="">Nume: </label></br><input type="text" name="nume"></div>
+            <div class="inputuri"><label for="">MaxPowerEC: </label></br><input type="text" name="maxPowerEC"></div>
+            <div class="inputuri"><label for="">MaxTorqueEC: </label></br><input type="text" name="maxTorqueEC"></div>
+            <div class="inputuri"><label for="">FrontSuspension: </label></br><input type="text" name="frontSuspension">
+            </div>
+            <div class="inputuri"><label for="">RearSuspension: </label></br><input type="text" name="rearSuspension">
+            </div>
+            <div class="inputuri"><label for="">Frame: </label></br><input type="text" name="frame"></div>
+            <div class="inputuri"><label for="">Price</label></br><input type="text" name="price"></div>
+            <div class="inputuri"><label for="">Quantity</label></br><input type="text" name="Quantity"></div>
+
+        </form>
+    </div>
+</body>
+
+</html>
