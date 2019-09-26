@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="grid.css">
+  <title>Document</title>
+  <style>
+    .first-container {
+      display: grid;
+      grid-template-columns: 6fr 1.5fr 1fr;
+      gap: 20px;
+     
+      background-color: #005EB8;
+
+    }
+
+    .but {
+      font-size: 25px;
+      height: 80%;
+      border-radius: 6px;
+      border: none;
+
+    }
+    .buttonCump{
+      background-color:#005EB8;
+      color: white;
+    }
+    .butAdmin{
+      background-color:#005EB8;
+      color: white;
+    }
+
+    .titlu {
+      height: 80px;
+      width: 200px;
+
+    }
+
+    .second-container {
+      max-height: 900px;
+      align-content: center;
+
+    }
+
+    .third-container {
+ 
+      margin: 0px auto;
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+
+    }
+
+    .pad {
+      padding: 10px;
+      cursor: pointer;
+
+    }
+
+    .imgHeight {
+      max-height: 500px;
+      max-width: 800px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+
+    #dimensiuneIMG{
+      max-width: 600px;
+      max-height: 500px;
+    }
+  </style>
+
+
+
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: Verdana, sans-serif;
+
+    }
+
+    .mySlides {
+      display: none
+    }
+
+
+
+    /* Slideshow container */
+    .slideshow-container {
+      
+      height:500px; 
+      text-align:center; 
+    }
+
+    /* Next & previous buttons */
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover,
+    .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+
+    .text {
+      color: #f2f2f2;
+      font-size: 15px;
+      padding: 8px 12px;
+      position: absolute;
+      bottom: 8px;
+      width: 100%;
+      text-align: center;
+    }
+
+
+
+    /* The dots/bullets/indicators */
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    .active,
+    .dot:hover {
+      background-color: #717171;
+    }
+
+    /* Fading animation */
+    .fade {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 1.5s;
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+
+    @-webkit-keyframes fade {
+      from {
+        opacity: .4
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes fade {
+      from {
+        opacity: .4
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    /* On smaller screens, decrease text size */
+    @media only screen and (max-width: 300px) {
+
+      .prev,
+      .next,
+      .text {
+        font-size: 11px
+      }
+    }
+
+    
+        /* -- quantity box -- */
+
+        .quantity {
+
+        }
+
+        .quantity .input-text.qty {
+            width: 35px;
+            height: 39px;
+            padding: 0 5px;
+            text-align: center;
+            background-color: transparent;
+            border: 1px solid #efefef;
+        }
+
+        .quantity.buttons_added {
+            text-align: left;
+            position: relative;
+            white-space: nowrap;
+            vertical-align: top;
+        }
+
+        .quantity.buttons_added input {
+            display: inline-block;
+            margin: 0;
+            vertical-align: top;
+            box-shadow: none;
+        }
+
+        .quantity.buttons_added .minus,
+        .quantity.buttons_added .plus {
+            padding: 7px 10px 8px;
+            height: 41px;
+            background-color: #ffffff;
+            border: 1px solid #efefef;
+            cursor: pointer;
+        }
+
+        .quantity.buttons_added .minus {
+            border-right: 0;
+        }
+
+        .quantity.buttons_added .plus {
+            border-left: 0;
+        }
+
+        .quantity.buttons_added .minus:hover,
+        .quantity.buttons_added .plus:hover {
+            background: #eeeeee;
+        }
+
+        .quantity input::-webkit-outer-spin-button,
+        .quantity input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            margin: 0;
+        }
+
+        .quantity.buttons_added .minus:focus,
+        .quantity.buttons_added .plus:focus {
+            outline: none;
+        }
+        .buttons_added{
+          display: grid;
+          grid-template-columns: 30px 30px 30px;
+        }
+  </style>
+
+
+  <script>
+
+    var slideIndex = 1;
+
+    function load() {
+
+      showSlides(slideIndex);
+    }
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {
+        slideIndex = 1
+      }
+      if (n < 1) {
+        slideIndex = slides.length
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+      setTimeout("plusSlides(1)", 10000);
+    }
+  </script>
+  <script>
+    function show(id) {
+
+      draw(id);
+    }
+
+    async function draw(id) {
+      var str="";
+      var response = await fetch(`https://motocycle-5cae5.firebaseio.com/produse.json`);
+      window.list = await response.json();
+
+      for(var i in list){
+        if(id===list[i].Category){
+          str+=`
+          <div style="display: flex;flex-wrap: wrap;">
+          <img name="imagine" class="col-xs-12 col-md-8 col-lg-8"
+            src="${list[i].Imagine}"
+            alt="" class="elementImg" id="dimensiuneIMG">
+          <div class="col-xs-12 col-md-4 col-lg-4">
+          <p name="name">Name: ${list[i].Nume}</p>
+          <p name="power">Max Power EC: ${list[i].MaxPowerEC} </p>
+          <p name="torque">Max Torque EC: ${list[i].MaxTorqueEC}</p>
+          <p name="fSsupension">Front Suspension: ${list[i].FrontSuspension}</p>
+          <p name="rSuspension">Rear Suspension: ${list[i].RearSuspension}</p>
+          <p name="frame">Frame: ${list[i].Frame}</p>
+          <p name="price">Price: ${list[i].Price}$</p>
+          <p name="price">Stock: ${list[i].Stock}</p>
+          <div class="quantity">
+                        <div class="quantity buttons_added">
+                            <input type="button" value="-" class="minus" onclick="increaseQ('${i}',-1)">
+                            <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4">
+                            <input type="button" value="+" class="plus" onclick="increaseQ('${i}',1)">
+                        </div>
+                    </div>
+          <button onclick="cos(event,'${i}')">Adauga in cos</button>
+        </div>
+        </div>
+          `;
+        }
+      }
+      document.querySelector("#container-obiecte").innerHTML = str;
+
+    }
+
+    async function cos(event,i){
+      event.preventDefault();
+      var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos.json`);
+            window.produseInCos = await response.json();
+            var found = false;
+            for(j in produseInCos){
+              if(list[i].Nume===produseInCos[j].Nume){
+                var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos/${j}/Quantity.json`, {
+                    method: "put",
+                    body: produseInCos[j].Quantity+1
+                });
+                found = true;
+              }
+            }
+            if(!found){
+              var obj={
+                Imagine:list[i].Imagine,
+                Nume:list[i].Nume,
+                MaxPowerEC:list[i].MaxPowerEC,
+                MaxTorqueEC:list[i].MaxTorqueEC,
+                FrontSuspension:list[i].FrontSuspension,
+                RearSuspension:list[i].RearSuspension,
+                Frame:list[i].Frame,
+                Price:list[i].Price,
+                Quantity:1,
+                Stock:list[i].Stock
+              }
+              var response=await fetch(`https://motocycle-5cae5.firebaseio.com/cos.json`,{
+                method:"post",
+                body: JSON.stringify(obj)
+                
+              });
+            alert("produsul a fost adaugat in cos")
+            }
+      
+      
+    }
+    function home(){
+      location.href="E-commerce.html";
+    }
+    function cosCumparaturi(){
+      location.href="cosCumparaturi.html";
+    }
+    function admin(){
+      location.href="adminEcommerce.html";
+    }
+    async function increaseQ(i, nr) {
+      if(list[i].Quantity<list[i].Stock){
+            list[i].Quantity = list[i].Quantity + nr;
+            var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos/${i}/Stock.json`, {
+                method: "put",
+                body: list[i].Quantity
+            });
+          }else{
+            alert("Ai depasit stocul");
+          }
+            await draw();
+        }
+        
+  </script>
+ 
+</head>
+
+<body onload="load();">
+  <div>
+    <div class="first-container">
+      <img src="emoto3.png" alt="" class="titlu pad" onclick="home()">
+      <button class="but buttonCump" onclick="cosCumparaturi()">Cos de cumparaturi</button>
+      <button class="but butAdmin" onclick="admin()">Admin</button>
+
+    </div>
+    </br><br><br>
+    <div class="second-container">
+      <div class="slideshow-container">
+
+        <div class="mySlides fade">
+
+          <img src="https://www.thebikemarket.co.uk/media/782196/2017_YAM_MT10DX_EU_BWM2_STU_001_03.jpg?width=800"
+             class="imgHeight">
+          <div class="text">Naked</div>
+        </div>
+
+        <div class="mySlides fade">
+
+          <img
+            src="https://cdp.azureedge.net/products/USA/IDN/2018/MC/CRUISER/SCOUT_BOBBER/50/THUNDER_BLACK/2000000015.jpg"
+             class="imgHeight">
+          <div class="text">Cruiser</div>
+        </div>
+
+        <div class="mySlides fade">
+
+          <img src="https://www.thebikemarket.co.uk/media/2739387/2019%20main%20blue%20white%20red.jpg?width=800"
+             class="imgHeight">
+          <div class="text">Sport Bike</div>
+        </div>
+
+        <div class="mySlides fade">
+
+          <img src="https://www.hondaireland.ie/assets/2018/02/115828_GL_Gold-Wing-Tour.jpg" 
+            class="imgHeight">
+          <div class="text">Touring</div>
+        </div>
+
+        <div class="mySlides fade">
+
+          <img src="https://www.thebikemarket.co.uk/media/2766841/2019%20main%20silver%20green.jpg?width=800"
+             class="imgHeight">
+          <div class="text">Sport Touring</div>
+        </div>
+        <div class="mySlides fade">
+
+          <img src="https://www.arpem.com/imagenes/ficha/5/8/3/2/kawasaki-klx-250-lateral-derecho.jpg"
+             class="imgHeight">
+          <div class="text">Dual-sport</div>
+        </div>
+
+        <div class="mySlides fade">
+
+          <img src="https://www.thebikemarket.co.uk/media/2296014/2019%20main%20black.jpg?width=800" 
+            class="imgHeight">
+          <div class="text">Scooters</div>
+        </div>
+
+        <div class="mySlides fade">
+
+          <img src="https://www.thebikemarket.co.uk/media/2716291/2019%20main%20grey.jpg?width=800" 
+            class="imgHeight">
+          <div class="text">Off-road</div>
+        </div>
+        <div class="mySlides fade">
+
+          <img src="https://mcn-images.bauersecure.com/PageFiles/670888/zero_sr_f_electric_001.jpg" 
+            class="imgHeight">
+          <div class="text">Electric</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+      </div>
+      <br>
+
+      <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+        <span class="dot" onclick="currentSlide(7)"></span>
+        <span class="dot" onclick="currentSlide(8)"></span>
+        <span class="dot" onclick="currentSlide(9)"></span>
+      </div>
+
+    </div>
+    <div class="third-container">
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('naked')"> Naked</div>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('cruiser')">Cruiser</div>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('sport')"> Sport bike</div>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('touring')">Touring</div>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('sportTouring')">Sport touring</div>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('dual')">Dual-sport</div>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('scooter')">Scooters</div>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('offroad')">Off-road</div>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="pad" onclick="show('electric')">Electric</div>
+      </div>
+    </div>
+    
+    <div id="container-obiecte"></div>
+    
+  </div>
+</body>
+
+</html>
