@@ -347,16 +347,18 @@
 
     }
 
+   
     async function cos(event,i){
       event.preventDefault();
       var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos.json`);
             window.produseInCos = await response.json();
             var found = false;
+            var val=document.querySelector("#quantity").value
             for(j in produseInCos){
               if(list[i].Nume===produseInCos[j].Nume){
                 var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos/${j}/Quantity.json`, {
                     method: "put",
-                    body: produseInCos[j].Quantity+1
+                    body: produseInCos[j].Quantity+parseInt(val)
                 });
                 found = true;
               }
