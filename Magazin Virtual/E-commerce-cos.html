@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Cos cumparaturi</title>
+    <link rel="stylesheet" type="text/css" href="grid.css">
+
+    <style>
+    .first-container {
+      display: grid;
+      grid-template-columns: 6fr 1.5fr 1fr;
+      gap: 20px;
+     
+      background-color: #005EB8;
+
+    }
+
+
+        .hidden{
+            display: none;
+        }
+        .pad {
+            padding: 10px;
+            cursor: pointer;
+
+        }
+
+        .remove {
+            color: blue;
+            text-align: end;
+        }
+
+        body {
+
+            font-family: Verdana, sans-serif;
+
+        }
+
+        .but {
+      font-size: 25px;
+      height: 80%;
+      border-radius: 6px;
+      border: none;
+
+    }
+    .buttonCump{
+      background-color:#005EB8;
+      color: white;
+    }
+    .butAdmin{
+      background-color:#005EB8;
+      color: white;
+    }
+
+    .titlu {
+      height: 80px;
+      width: 200px;
+    }
+
+    </style>
+
+
+    <style>
+        .row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+
+
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            flex-basis: 100%;
+            flex: 2;
+            align-content: space-between;
+         
+
+        }
+
+        /* -- quantity box -- */
+
+        .quantity {
+            display: inline-block;
+        }
+
+        .quantity .input-text.qty {
+            width: 35px;
+            height: 39px;
+            padding: 0 5px;
+            text-align: center;
+            background-color: transparent;
+            border: 1px solid #efefef;
+        }
+
+        .quantity.buttons_added {
+            text-align: left;
+            position: relative;
+            white-space: nowrap;
+            vertical-align: top;
+        }
+
+        .quantity.buttons_added input {
+            display: inline-block;
+            margin: 0;
+            vertical-align: top;
+            box-shadow: none;
+        }
+
+        .quantity.buttons_added .minus,
+        .quantity.buttons_added .plus {
+            padding: 7px 10px 8px;
+            height: 41px;
+            background-color: #ffffff;
+            border: 1px solid #efefef;
+            cursor: pointer;
+        }
+
+        .quantity.buttons_added .minus {
+            border-right: 0;
+        }
+
+        .quantity.buttons_added .plus {
+            border-left: 0;
+        }
+
+        .quantity.buttons_added .minus:hover,
+        .quantity.buttons_added .plus:hover {
+            background: #eeeeee;
+        }
+
+        .quantity input::-webkit-outer-spin-button,
+        .quantity input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            margin: 0;
+        }
+
+        .quantity.buttons_added .minus:focus,
+        .quantity.buttons_added .plus:focus {
+            outline: none;
+        }
+
+
+        /*modal*/
+    .modal{
+      
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content{
+      background-color: #f4f4f4;
+      margin: 20% auto;
+      padding: 20px;
+      width: 70%;
+      box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0.17);
+    }
+
+    .closeBtn{
+      color: #ccc;
+      float: right;
+      font-size: 30px;
+    }
+    .closeBtn:hover,.closeBtn:focus{
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+
+    </style>
+
+
+
+    <script>
+        function home() {
+            location.href = "E-commerce.html";
+        }
+
+        function cosCumparaturi() {
+            location.href = "cosCumparaturi.html";
+        }
+
+
+        async function draw() {
+            var str = "";
+            var total=0;
+            var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos.json`);
+            window.list = await response.json();
+
+            for (var i in list) {
+                if(list[i]===null)continue
+                total=total+(list[i].Quantity*list[i].Price);
+                str += `
+
+            <div class="row">
+                <div onclick="detaliiProd(event,'${i}')" class="pad column">${list[i].Nume}
+                </div>
+                <div class="column">${list[i].Price}
+                </div>
+                <div class="column">
+                    <div class="quantity">
+                        <div class="quantity buttons_added">
+                            <span><input type="button" value="-" class="minus" onclick="increaseQ('${i}',-1)"></span>
+                            <span><input type="number" step="1" min="1" max="${list[i].Stock}" name="quantity" value="${list[i].Quantity}" title="Qty" class="input-text qty " size="4"></span>
+                            <span><input type="button" value="+" class="plus" onclick="increaseQ('${i}',1)"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">${(list[i].Quantity*list[i].Price).toFixed(3)}
+                </div>
+                <div class="column">
+                    <p class="pad remove" onclick="remove(event,'${i}')">Remove</p>
+                </div>
+
+
+            </div>
+          `;
+            }
+            document.querySelector("#obiecteCos").innerHTML = str;
+
+
+ // var quantity=`${list[i].length}*${list[i].Quantity}`;
+
+            const tva=19/100*total;
+            document.querySelector("#prodTotal").innerHTML=Object.keys(list).length;
+            document.querySelector("#tvaTotal").innerHTML=tva.toFixed(3);
+            document.querySelector("#transport").innerHTML=Object.keys(list).length * 15;
+            document.querySelector("#totalT").innerHTML=total.toFixed(3);
+        }
+
+    async function detaliiProd (event,i){
+        window.idx = i
+        event.preventDefault();
+        var str="";
+      var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos.json`);
+      window.list = await response.json();
+        str+=`
+          <div style="display: flex;flex-wrap: wrap;">
+          <img name="imagine" class="col-xs-12 col-md-8 col-lg-8"
+            src="${list[i].Imagine}"
+            alt="" class="elementImg" id="dimensiuneIMG">
+          <div class="col-xs-12 col-md-4 col-lg-4">
+          <p name="name">Name: ${list[i].Nume}</p>
+          <p name="power">Max Power EC: ${list[i].MaxPowerEC} </p>
+          <p name="torque">Max Torque EC: ${list[i].MaxTorqueEC}</p>
+          <p name="fSsupension">Front Suspension: ${list[i].FrontSuspension}</p>
+          <p name="rSuspension">Rear Suspension: ${list[i].RearSuspension}</p>
+          <p name="frame">Frame: ${list[i].Frame}</p>
+          <p name="price">Price: ${list[i].Price}$</p>
+          <p name="price">Stock: ${list[i].Stock}</p>
+          <div class="quantity">
+            <label>Cantitate: </label><input type="number" name="cantitate" id="quantity" value="1" min="1" style="width:50px"/>
+                    </div>
+          <button onclick="cos(event,'${i}')">Adauga in cos</button>
+        </div>
+        </div>
+          `;
+          document.querySelector("#detaliiProdus").innerHTML = str;
+          document.querySelector("#simpleModal").classList.remove("hidden");
+}
+
+
+
+async function cos(event,i){
+      event.preventDefault();
+      var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos.json`);
+            window.produseInCos = await response.json();
+            var found = false;
+            var val=document.querySelector("#quantity").value;
+            for(j in produseInCos){
+              
+              if(list[i].Nume===produseInCos[j].Nume && parseInt(produseInCos[j].Quantity)+parseInt(val) <= list[i].Stock){
+                var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos/${j}/Quantity.json`, {
+                    method: "put",
+                    body: parseInt(produseInCos[j].Quantity)+parseInt(val)
+                });
+                found = true;
+              }
+            else if(list[i].Nume===produseInCos[j].Nume && parseInt(produseInCos[j].Quantity)+parseInt(val) > list[i].Stock){
+              return alert("ai depasit stocul");
+            }
+            }
+            if(!found){
+              var obj={
+                Imagine:list[i].Imagine,
+                Nume:list[i].Nume,
+                MaxPowerEC:list[i].MaxPowerEC,
+                MaxTorqueEC:list[i].MaxTorqueEC,
+                FrontSuspension:list[i].FrontSuspension,
+                RearSuspension:list[i].RearSuspension,
+                Frame:list[i].Frame,
+                Price:list[i].Price,
+                Quantity:document.querySelector("[name='cantitate']").value,
+                Stock:list[i].Stock
+              }
+              var response=await fetch(`https://motocycle-5cae5.firebaseio.com/cos.json`,{
+                method:"post",
+                body: JSON.stringify(obj)
+                
+              });
+            alert("produsul a fost adaugat in cos")
+            }
+      await draw();
+      
+    }
+
+
+        async function increaseQ(i, nr) {
+            if(parseInt(list[i].Quantity) + parseInt(nr) <= list[i].Stock){
+                list[i].Quantity = parseInt(list[i].Quantity) + nr;
+                var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos/${i}/Quantity.json`, {
+                    method: "put",
+                    body: list[i].Quantity
+                });
+            }else{
+                alert("Ai depasit stocul");
+            }
+            await draw();
+        }
+
+
+
+        async function remove(event, i) {
+            event.preventDefault();
+
+            var response = await fetch(`https://motocycle-5cae5.firebaseio.com/cos/${i}.json`, {
+                method: "delete",
+
+            });
+            location.href = "cosCumparaturi.html";
+        }
+
+
+
+        function closeModal(){
+
+document.querySelector("#simpleModal").classList.add("hidden")
+
+}
+window.addEventListener('click',outsideClick);
+function outsideClick(e){
+
+  if(e.target==document.querySelector("#simpleModal")){
+    document.querySelector("#simpleModal").classList.add("hidden")
+}
+}
+    </script>
+</head>
+
+<body onload="draw()">
+    <div class="first-container">
+        <img src="emoto3.png" alt="" class="titlu pad" onclick="home()">
+        <button class="but buttonCump" onclick="cosCumparaturi()">Cos de cumparaturi</button>
+    </div>
+    </br></br></br>
+    <div class="second-container">
+        <div class="row totalTab">
+            <div class="column">Nume
+            </div>
+            <div class="column">Pret
+            </div>
+            <div class="column">Cantitate
+            </div>
+            <div class="column">SubTotal
+            </div>
+            <div class="column">
+            </div>
+            <div class="column">
+                    <p>Produse: <span id="prodTotal"></span> </p> 
+                    <p>TVA: <span id="tvaTotal"></span>$</p>
+                    <p>Transport: <span id="transport"></span>$</p>
+                    <p>Total: <span id="totalT"></span>$</p>
+                    <button>Cumpara</button>
+                </div>
+        </div>
+        </br>
+        </br>
+        <div id="obiecteCos"></div>
+        <div id="simpleModal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="closeBtn" onclick="closeModal()" >&times;</span>
+                        <div id="detaliiProdus"></div>
+                </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
